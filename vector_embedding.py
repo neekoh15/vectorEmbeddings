@@ -1,12 +1,10 @@
 """
-Módulo VModel: Proporciona una clase para trabajar con embeddings de texto y buscar coincidencias en una base de datos de Preguntas y Respuestas.
+VModel Module: Provides a class for working with text embeddings and searching for matches in a Question-Answer database.
 
 @author: Martinez, Nicolas Agustin
 
 @credits: Text embeddings & semantic search from https://HuggingFace.co
-@credits: https://www.youtube.com/watch?v=OATCgQtNX2o
-
-<a href="https://www.freepik.com/free-vector/abstract-vector-mesh-background-chaotically-connected-points-polygons-flying-space-flying-debris-futuristic-technology-style-card-lines-points-circles-planes-futuristic-design_1283683.htm#from_view=detail_alsolike">Image by GarryKillian</a> on Freepik
+Inspired on the Youtube video: https://www.youtube.com/watch?v=OATCgQtNX2o
 """
 
 import json
@@ -51,7 +49,7 @@ class VModel:
 
     def __load_model(self):
         """
-        Vectoriza la base de datos de tags y agrega un índice FAISS para búsquedas rápidas.
+        Vectorize the QA database and add a FAISS index for fast searches.
         """
 
         self.context_dataset = self.context_dataset.map(lambda x: {"embeddings": self.__get_embeddings(x["context"]).cpu().numpy()[0]})
@@ -59,14 +57,14 @@ class VModel:
 
     def __mean_pooling(self, model_output, attention_mask):
         """
-        Realiza mean pooling en los embeddings para obtener una representación consolidada.
+        Performs mean pooling on the embeddings to obtain a consolidated representation.
         
         Args:
-        - model_output (torch.Tensor): Salida del modelo.
-        - attention_mask (torch.Tensor): Máscara de atención para el input.
+        - model_output (torch.Tensor): Model output.
+        - attention_mask (torch.Tensor): Attention mask for the input.
         
         Returns:
-        - torch.Tensor: Embedding consolidado.
+        - torch.Tensor: Consolidated embedding.
         """
         token_embeddings = model_output[0]
         input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
@@ -74,29 +72,30 @@ class VModel:
 
     def __get_embeddings(self, text_list):
         """
-        Obtiene embeddings para una lista de textos utilizando el modelo y el tokenizador.
+        Obtains embeddings for a list of texts using the model and tokenizer.
         
         Args:
-        - text_list (list): Lista de textos para los cuales obtener embeddings.
+        - text_list (list): List of texts to obtain embeddings for.
         
         Returns:
-        - torch.Tensor: Embeddings de los textos.
+        - torch.Tensor: Embeddings of the texts.
         """
+        
         encoded_input = self.tokenizer(text_list, padding=True, truncation=True, return_tensors="pt", max_length=512)
         with torch.no_grad():
             model_output = self.model(**encoded_input)
         return self.__mean_pooling(model_output, encoded_input["attention_mask"])
 
-    def __find_best_matches(self, user_input, k=10):
+    def __find_best_matches(self, user_input, k=3):
         """
-        Busca las k mejores coincidencias para el input del usuario en el dataset de preguntas.
+        Searches for the top k matches for user input in the question dataset.
         
         Args:
-        - user_input (str): Texto de entrada del usuario.
-        - k (int): Número de coincidencias a retornar.
+        - user_input (str): User's input text.
+        - k (int): Number of matches to return.
         
         Returns:
-        - list: Lista de las k mejores coincidencias.
+        - list: List of the top k matches.
         """
 
         user_embedding = self.__get_embeddings([user_input]).cpu().detach().numpy()
@@ -105,22 +104,23 @@ class VModel:
 
     def ask_question_to_JSON(self, sentence):
         """
-        Obtiene tags similares para una oración dada.
+        Retrieves a list of similar questions for a given sentence.
         
         Args:
-        - sentence (str): Oración para la cual buscar tags similares.
+        - sentence (str): Sentence for which to find similar questions.
         
         Returns:
-        - list: Lista de tags similares.
+        - list: List of similar questions.
         """
         responses = self.__find_best_matches(sentence)['context'][0]
-
+    
         index = self.JSON_data['questions'].index(responses)
-
+    
         return {
-            'pregunta asociada' : responses,
-            'respuesta' : self.JSON_data['answers'][index]
+            'associated question': responses,
+            'answer': self.JSON_data['answers'][index]
         }
+
 
 
 if __name__ == '__main__':
@@ -132,6 +132,6 @@ if __name__ == '__main__':
         question = input('insert your query: ')
         answer = model.ask_question_to_JSON(question)
 
-        print(answer['pregunta asociada'])
-        print(answer['respuesta'])
+        print(answer['associated question'])
+        print(answer['answer'])
 
