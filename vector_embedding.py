@@ -129,9 +129,9 @@ if __name__ == '__main__':
     model = VModel(json_path=json_path)
 
     while True:
-        question = input('insert your query: ')
+        question = input('\nUSER INPUT >> ')
         answer = model.ask_question_to_JSON(question)
 
-        print(answer['associated question'])
-        print(answer['answer'])
+        print('Q: ',answer['associated question'])
+        print('A: ', answer['answer'])
 
