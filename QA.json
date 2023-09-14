@@ -1,26 +1,26 @@
 {
     "questions": [
-        "¿Qué es la vectorización por embeddings?",
-        "¿Cómo se comparan dos embeddings?",
-        "¿Qué son los word embeddings?",
-        "¿Qué es un embedding de frase o sentence embedding?",
-        "¿Cuáles son las aplicaciones comunes de los embeddings?",
-        "¿Cómo se entrenan los embeddings?",
-        "¿Qué es el modelo Word2Vec?",
-        "¿Cómo difiere GloVe de Word2Vec?",
-        "¿Qué es el embedding contextual?",
-        "¿Por qué son útiles los embeddings en el procesamiento del lenguaje natural?"
+        "What is vectorization by embeddings?",
+        "How are two embeddings compared?",
+        "What are word embeddings?",
+        "What is a sentence embedding?",
+        "What are the common applications of embeddings?",
+        "How are embeddings trained?",
+        "What is the Word2Vec model?",
+        "How does GloVe differ from Word2Vec?",
+        "What is contextual embedding?",
+        "Why are embeddings useful in natural language processing?"
     ],
     "answers": [
-        "La vectorización por embeddings se refiere a la representación de palabras, frases o documentos como vectores en un espacio de alta dimensión. Estos vectores capturan la semántica y las relaciones contextuales entre las palabras.",
-        "Los embeddings se pueden comparar usando medidas de similitud como la similitud del coseno. Cuanto más cercanos estén los vectores en el espacio, más similares serán en términos de significado.",
-        "Los word embeddings son representaciones vectoriales de palabras en un espacio continuo donde palabras semánticamente similares se mapean cerca unas de otras.",
-        "Un embedding de frase o sentence embedding es una representación vectorial de una frase completa. Captura el significado global de la frase, a diferencia de los word embeddings que representan palabras individuales.",
-        "Los embeddings se utilizan en una variedad de aplicaciones, como la búsqueda semántica, la clasificación de textos, la traducción automática y el análisis de sentimientos, entre otras.",
-        "Los embeddings generalmente se entrenan usando grandes conjuntos de datos de texto y algoritmos como Word2Vec, GloVe o modelos más recientes como BERT y ELMo.",
-        "Word2Vec es un algoritmo popular para aprender embeddings de palabras a partir de grandes conjuntos de datos de texto. Utiliza contextos de palabras circundantes para aprender representaciones vectoriales.",
-        "GloVe, que significa 'Global Vectors', es un método para aprender embeddings que se centra en las estadísticas globales del corpus. A diferencia de Word2Vec, que se basa en contextos locales, GloVe construye matrices de co-ocurrencia y las factoriza para obtener embeddings.",
-        "Un embedding contextual es una representación vectorial que tiene en cuenta el contexto en el que aparece una palabra. A diferencia de los embeddings tradicionales que tienen un vector fijo para cada palabra, los embeddings contextuales pueden variar según el contexto.",
-        "Los embeddings son útiles en el procesamiento del lenguaje natural porque proporcionan una representación densa y continua del texto que captura el significado y las relaciones semánticas, lo que facilita la realización de tareas complejas."
+        "Vectorization by embeddings refers to representing words, phrases, or documents as vectors in a high-dimensional space. These vectors capture the semantics and contextual relationships between words.",
+        "Embeddings can be compared using similarity measures like cosine similarity. The closer the vectors are in space, the more similar they are in terms of meaning.",
+        "Word embeddings are vector representations of words in a continuous space where semantically similar words are mapped close to each other.",
+        "A sentence embedding is a vector representation of a complete sentence. It captures the overall meaning of the sentence, unlike word embeddings that represent individual words.",
+        "Embeddings are used in a variety of applications, such as semantic search, text classification, machine translation, and sentiment analysis, among others.",
+        "Embeddings are typically trained using large text datasets and algorithms like Word2Vec, GloVe, or more recent models like BERT and ELMo.",
+        "Word2Vec is a popular algorithm for learning word embeddings from large text datasets. It uses surrounding word contexts to learn vector representations.",
+        "GloVe, which stands for 'Global Vectors,' is a method for learning embeddings that focuses on global statistics of the corpus. Unlike Word2Vec, which relies on local contexts, GloVe constructs co-occurrence matrices and factorizes them to obtain embeddings.",
+        "Contextual embedding is a vector representation that takes into account the context in which a word appears. Unlike traditional embeddings that have a fixed vector for each word, contextual embeddings can vary depending on the context.",
+        "Embeddings are useful in natural language processing because they provide a dense and continuous representation of text that captures meaning and semantic relationships, making it easier to perform complex tasks."
     ]
 }
