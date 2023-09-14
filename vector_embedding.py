@@ -1,8 +1,6 @@
 """
 VModel Module: Provides a class for working with text embeddings and searching for matches in a Question-Answer database.
-
 @author: Martinez, Nicolas Agustin
-
 @credits: Text embeddings & semantic search from https://HuggingFace.co
 Inspired on the Youtube video: https://www.youtube.com/watch?v=OATCgQtNX2o
 """
