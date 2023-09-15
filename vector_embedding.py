@@ -86,7 +86,7 @@ class VModel:
 
     def __find_best_matches(self, user_input, k=3):
         """
-        Searches for the top k matches for user input in the question dataset.
+        Searches for the top k matches for user input in the question QA JSON (could be any source of data).
         
         Args:
         - user_input (str): User's input text.
