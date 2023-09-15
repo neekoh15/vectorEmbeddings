@@ -129,7 +129,6 @@ if __name__ == '__main__':
     while True:
         question = input('\nUSER INPUT >> ')
         answer = model.ask_question_to_JSON(question)
-
         print('Q: ',answer['associated question'])
         print('A: ', answer['answer'])
 
