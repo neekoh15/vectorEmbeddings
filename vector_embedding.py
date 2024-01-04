@@ -11,12 +11,12 @@ from transformers import AutoTokenizer, AutoModel
 from datasets import Dataset
 
 class VModel:
-    def __init__(self, json_path):
+    def __init__(self, json_path:str) -> None:
         """
         Initialize the VModel instance.
         
         Args:
-        - paragraphs (list): List of paragraphs extracted from the PDF.
+        - json_path: str -> Location of the Vecotorization model
         """
 
         self.json_path = json_path
@@ -32,7 +32,7 @@ class VModel:
         # Load the model and prepare the FAISS index
         self.__load_model()
 
-    def __data_preproccesing(self):
+    def __data_preproccesing(self) -> None:
 
         # Cargar datos de tags desde el archivo JSON
         with open(self.json_path, "r", encoding='utf-8') as json_file:
@@ -45,7 +45,7 @@ class VModel:
 
         self.context_dataset = Dataset.from_dict(self.context)
 
-    def __load_model(self):
+    def __load_model(self) -> None:
         """
         Vectorize the QA database and add a FAISS index for fast searches.
         """
@@ -53,7 +53,7 @@ class VModel:
         self.context_dataset = self.context_dataset.map(lambda x: {"embeddings": self.__get_embeddings(x["context"]).cpu().numpy()[0]})
         self.context_dataset.add_faiss_index(column="embeddings")
 
-    def __mean_pooling(self, model_output, attention_mask):
+    def __mean_pooling(self, model_output:torch.Tensor, attention_mask:torch.Tensor) -> torch.Tensor:
         """
         Performs mean pooling on the embeddings to obtain a consolidated representation.
         
@@ -68,7 +68,7 @@ class VModel:
         input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
         return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
 
-    def __get_embeddings(self, text_list):
+    def __get_embeddings(self, text_list:list) -> torch.Tensor:
         """
         Obtains embeddings for a list of texts using the model and tokenizer.
         
@@ -84,7 +84,7 @@ class VModel:
             model_output = self.model(**encoded_input)
         return self.__mean_pooling(model_output, encoded_input["attention_mask"])
 
-    def __find_best_matches(self, user_input, k=3):
+    def __find_best_matches(self, user_input:str, k=3) -> list:
         """
         Searches for the top k matches for user input in the question QA JSON (could be any source of data).
         
@@ -100,7 +100,7 @@ class VModel:
         scores, samples = self.context_dataset.get_nearest_examples("embeddings", user_embedding, k=k)
         return samples
 
-    def ask_question_to_JSON(self, sentence):
+    def ask_question_to_JSON(self, sentence:str) -> dict:
         """
         Retrieves a list of similar questions for a given sentence.
         
